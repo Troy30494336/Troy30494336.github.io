@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>經典 2048 - 遊戲基地</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <header>
+            <h1>2048</h1>
+            <div class="score-container">
+                <div class="score-box">分數: <span id="score">0</span></div>
+                <button id="restart-btn">重新開始</button>
+            </div>
+        </header>
+        
+        <p class="instructions">使用鍵盤的 <b>上下左右鍵</b> 或在手機上 <b>滑動螢幕</b> 來合併數字！</p>
+
+        <div id="grid"></div>
+
+        <div id="game-over" class="hidden">
+            <div class="over-message">
+                <h2>遊戲結束！</h2>
+                <button id="retry-btn">再試一次</button>
+            </div>
+        </div>
+        
+        <div class="ad-placeholder">【廣告版位預留區】</div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
