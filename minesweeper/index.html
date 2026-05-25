@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>經典踩地雷 - 遊戲基地</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <header>
+            <h1>踩地雷</h1>
+            <div class="status-container">
+                <div class="status-box">剩餘地雷: <span id="mine-count">10</span></div>
+                <button id="restart-btn">重新開始</button>
+            </div>
+        </header>
+        
+        <p class="instructions">左鍵點擊開格，<b>長按</b> 或 <b>右鍵</b> 可以插旗標記地雷！</p>
+
+        <div id="board"></div>
+
+        <div id="game-result" class="hidden">
+            <div class="result-message">
+                <h2 id="result-text">遊戲結束！</h2>
+                <button id="retry-btn">再試一次</button>
+            </div>
+        </div>
+        
+        <div class="ad-placeholder">【廣告版位預留區】</div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
