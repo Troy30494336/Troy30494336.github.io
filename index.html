@@ -13,6 +13,7 @@
             --text-muted: #94a3b8;
             --primary: #38bdf8;
             --primary-hover: #0ea5e9;
+            --border-color: #334155;
         }
 
         * {
@@ -32,70 +33,148 @@
         /* 頂部標題區塊 */
         header {
             text-align: center;
-            padding: 60px 20px;
+            padding: 40px 20px 20px 20px;
             max-width: 800px;
             margin: 0 auto;
         }
 
         header h1 {
             font-size: 2.5rem;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             color: var(--primary);
             font-weight: 700;
         }
 
         header p {
             color: var(--text-muted);
-            font-size: 1.1rem;
+            font-size: 1.05rem;
         }
 
-        /* 主要內容卡片網格 */
+        /* 🔍 控制面板（搜尋與分類網格） */
+        .controls {
+            max-width: 1200px;
+            margin: 20px auto 30px auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+
+        @media (min-width: 768px) {
+            .controls {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+
+        /* 搜尋框樣式 */
+        .search-box {
+            width: 100%;
+            max-width: 350px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 15px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary);
+        }
+
+        /* 分類按鈕區塊 */
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background-color: var(--card-bg);
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--primary);
+            color: #0f172a;
+            border-color: var(--primary);
+        }
+
+        /* 📦 主要內容卡片網格 */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
             padding: 20px;
         }
 
-        /* 卡片樣式 */
+        /* 卡片基本樣式 */
         .card {
             background-color: var(--card-bg);
             border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            padding: 22px;
+            border: 1px solid transparent;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
 
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(56, 189, 248, 0.2);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.3);
+            border-color: rgba(56, 189, 248, 0.3);
+        }
+
+        /* 當卡片被隱藏時的樣式 */
+        .card.hidden {
+            display: none !important;
         }
 
         .card-tag {
             align-self: flex-start;
             background-color: rgba(56, 189, 248, 0.1);
             color: var(--primary);
-            font-size: 0.8rem;
-            padding: 4px 8px;
-            border-radius: 6px;
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 20px;
             font-weight: bold;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
+        }
+
+        /* 針對工具類別可以換標籤顏色 */
+        .card[data-category="tool"] .card-tag {
+            background-color: rgba(34, 197, 94, 0.1);
+            color: #22c55e;
         }
 
         .card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 10px;
+            font-size: 1.25rem;
+            margin-bottom: 8px;
         }
 
         .card p {
             color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 18px;
             flex-grow: 1;
         }
 
@@ -106,14 +185,31 @@
             background-color: var(--primary);
             color: #0f172a;
             text-decoration: none;
-            padding: 10px 20px;
+            padding: 10px 16px;
             border-radius: 8px;
             font-weight: 600;
+            font-size: 0.9rem;
             transition: background-color 0.2s ease;
         }
 
         .btn:hover {
             background-color: var(--primary-hover);
+        }
+
+        .card[data-category="tool"] .btn {
+            background-color: #22c55e;
+        }
+        .card[data-category="tool"] .btn:hover {
+            background-color: #16a34a;
+        }
+
+        /* 查無結果提示 */
+        .no-results {
+            text-align: center;
+            grid-column: 1 / -1;
+            padding: 40px;
+            color: var(--text-muted);
+            font-size: 1.1rem;
         }
 
         /* 頁尾 */
@@ -123,7 +219,7 @@
             color: var(--text-muted);
             font-size: 0.9rem;
             margin-top: 60px;
-            border-top: 1px solid #334155;
+            border-top: 1px solid var(--border-color);
         }
     </style>
 </head>
@@ -131,35 +227,100 @@
 
     <header>
         <h1>🎮 Game & Tool Hub 🛠️</h1>
-        <p>歡迎來到我的個人創作基地！這裡收集了我自己開發的網頁小遊戲與實用小工具，點擊下方卡片即可開始使用。</p>
+        <p>歡迎來到我的個人創作基地！這裡收集了我自己開發的網頁小遊戲與實用小工具。</p>
     </header>
 
-    <div class="container">
-        <div class="card">
+    <div class="controls">
+        <div class="filter-buttons">
+            <button class="filter-btn active" onclick="filterCategory('all')">全部作品</button>
+            <button class="filter-btn" onclick="filterCategory('game')">網頁遊戲</button>
+            <button class="filter-btn" onclick="filterCategory('tool')">實用工具</button>
+        </div>
+        
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="搜尋遊戲或工具名稱..." oninput="searchItems()">
+        </div>
+    </div>
+
+    <div class="container" id="cardsGrid">
+        
+        <div class="card" data-category="game">
             <span class="card-tag">網頁遊戲</span>
             <h3>經典益智 2048</h3>
-            <p>經典的數字方塊合併遊戲，挑戰你的邏輯與思考極限！純前端網頁流暢遊玩。</p>
+            <p>經典的數字方塊合併遊戲，挑戰你的邏輯與思考極限！支援鍵盤與手機滑動遊玩。</p>
             <a href="./2048/index.html" class="btn">開始遊玩</a>
         </div>
 
-        <div class="card">
-            <span class="card-tag">實用小工具</span>
+        <div class="card" data-category="game">
+            <span class="card-tag">網頁遊戲</span>
+            <h3>經典踩地雷</h3>
+            <p>考驗邏輯與記憶力的傳統微軟經典遊戲！安全找出所有空地並標記危險地雷。</p>
+            <a href="./minesweeper/index.html" class="btn">開始遊玩</a>
+        </div>
+
+        <div class="card" data-category="tool">
+            <span class="card-tag">實用工具</span>
             <h3>JSON 格式化美化器</h3>
-            <p>一鍵貼上雜亂的 JSON 字串，自動排版、縮排並除錯，開發人員必備的隨身好幫手。</p>
+            <p>一鍵排版、縮排並美化雜亂的 JSON 字串，開發人員日常必備的隨身小幫手。</p>
             <a href="#" class="btn">立即使用</a>
         </div>
 
-        <div class="card">
-            <span class="card-tag">網頁遊戲</span>
-            <h3>經典踩地雷</h3>
-            <p>古老而迷人的經典微軟小遊戲！規則簡單，極度考驗你的邏輯推導能力，小心別浮躁點太快喔！</p>
-            <a href="./minesweeper/index.html" class="btn">開始遊玩</a>
-        </div>
+        <div id="noResultsText" class="no-results hidden">找不到相符的遊戲或小工具 🔍</div>
     </div>
 
     <footer>
         <p>© 2026 我的網頁基地. Powered by GitHub Pages.</p>
     </footer>
 
+    <script>
+        let currentCategory = 'all';
+
+        function filterCategory(category) {
+            currentCategory = category;
+            
+            // 切換按鈕的 active 樣式
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            applyFilter();
+        }
+
+        function searchItems() {
+            applyFilter();
+        }
+
+        function applyFilter() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.card');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const category = card.getAttribute('data-category');
+                const title = card.querySelector('h3').innerText.toLowerCase();
+                const description = card.querySelector('p').innerText.toLowerCase();
+
+                // 檢查是否符合分類
+                const matchCategory = (currentCategory === 'all' || category === currentCategory);
+                // 檢查是否符合搜尋關鍵字
+                const matchSearch = (title.includes(query) || description.includes(query));
+
+                if (matchCategory && matchSearch) {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            // 如果都沒符合的項目，顯示「查無結果」提示
+            const noResults = document.getElementById('noResultsText');
+            if (visibleCount === 0) {
+                noResults.classList.remove('hidden');
+            } else {
+                noResults.classList.add('hidden');
+            }
+        }
+    </script>
 </body>
 </html>
